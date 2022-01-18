@@ -5,8 +5,8 @@ MIN_TIME_SINCE_LAST_FIRE = 10
 ALIEN_SHIP_MOVE_DISTANCE = 2
 TORPEDO_MOVE_DISTANCE = 30
 ALIEN_BOMB_FALL_DISTANCE = 3
+INTERVAL_OF_BOMB_DROPPING = 5
 LIVES = 3
-startingsetup = [-300, -200, -100, 0, 100, 200, 300]
 
 screen = Screen()
 screen.setup(width=800, height=800)
@@ -23,8 +23,6 @@ boom = "boom.gif"
 screen.addshape(boom)
 breakthrough = False
 
-
-
 list_of_alien_ships = []
 list_of_spaceships = []
 list_of_alien_bombs = []
@@ -32,6 +30,7 @@ list_of_torpedos = []
 game_on = True
 time_since_last_fire = 11
 cyclenumber = 0
+
 
 class Spaceship(Turtle):
     
@@ -74,6 +73,7 @@ class Spaceship(Turtle):
         self.setposition(0, -300)
         self.showturtle()
         
+        
 class Torpedo(Turtle):
     
     def __init__(self, x, y):
@@ -103,6 +103,7 @@ class Torpedo(Turtle):
                 self.hideturtle()
                 list_of_torpedos.remove(self)
 
+
 class Alien_Ship(Turtle):
     
     def __init__(self, x, y):
@@ -130,7 +131,6 @@ class Alien_Ship(Turtle):
         if len(list_of_alien_ships) == 0:
             game_on = False
         
-        
     def linebreakdetector_left(self):
         global ALIEN_SHIP_MOVE_DISTANCE 
         if self.xcor() <= -374 and ALIEN_SHIP_MOVE_DISTANCE < 0:
@@ -145,17 +145,14 @@ class Alien_Ship(Turtle):
                 ship.godown()
             ALIEN_SHIP_MOVE_DISTANCE *= (-1)
         
-            
     def randombombgenerator(self):
         
-        # Drops at random a new bomb from an alien ship; on average one
-        # bomb every 10 seconds per ship
-        
-        if random.randint(0,5) == 5:
+        # Drops at random a new bomb from an alien ship
+        if random.randint(0,INTERVAL_OF_BOMB_DROPPING) == INTERVAL_OF_BOMB_DROPPING:
             new_bomb = Alienbombs(self.xcor(), self.ycor())
             list_of_alien_bombs.append(new_bomb)
             
-            
+        
 class Alienbombs(Turtle):
     
     def __init__(self, x, y):
@@ -185,7 +182,8 @@ class Alienbombs(Turtle):
             self.sety(100)
             spaceship.shape(boom)
             whathappensifheshit()
-                
+
+
 class Livewriter(Turtle):
     
     def __init__(self):
@@ -200,7 +198,7 @@ class Livewriter(Turtle):
         self.clear()
         self.color("white")
         self.write(f"Lives: {LIVES}", font = ("Arial", "14", "bold"))
-        
+
 def whathappensifheshit():
     global LIVES
     LIVES -= 1
@@ -214,12 +212,13 @@ def whathappensifheshit():
     
         
 #Generates initial set-up of alien fleet
-
+startingsetup = [-300, -200, -100, 0, 100, 200, 300]
 for i in startingsetup:
     new_ship = Alien_Ship(i, 350)
     new_ship.showturtle()
     list_of_alien_ships.append(new_ship)
     
+#Generates player's spaceship'
 spaceship = Spaceship()
 list_of_spaceships.append(spaceship)
 livewriter = Livewriter()
@@ -285,7 +284,7 @@ while game_on:
 #End-of-game message
 if len(list_of_alien_ships) == 0:
     message = "You win!"
-if lives == 0:
+if LIVES == 0:
     message = "Game over"
 if breakthrough:
     message = "Game over"
