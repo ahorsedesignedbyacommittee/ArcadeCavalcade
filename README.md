@@ -15,11 +15,14 @@ TORPEDO_MOVE_DISTANCE (default: 30). This determines how fast the torpedos fired
 
 ALIEN_BOMB_FALL_DISTANCE (default: 3). This determines how fast the bombs dropped by the player move (the higher the number, the faster --> Makes it harder).
 
+INTERVAL_OF_BOMB_DROPPING (default: 5). This determines the intervals at which, on average (not deterministically), an alien shop will drop a bomb
+(the higher the number, the less frequent the bombs --> Makes it easier)
+
 LIVES (default: 3). This determines the number of lives for the player; each hit by an alien bomb costs a life. Note that a "breakthrough" of the alien ships, i.e. when they reach the bottom edge, does not cost a life but rather ends the game (with a loss for the player).
 
 The program imports the files "boom.gif", "spaceship.gif" and "space.gif" for graphics. The first two of these are provided in this repository, I designed them myself. The file "space.gif" isn't provided for copyright reasons (as the file I'm using on my machine was downloaded from the web). Just pick a space-themed image of your likin and save it in the same folder as the .py file, named "space.gif".
 
-Version 1.0, April 2021
+Version 1.1, January 2022
 
 
 -------------------------------------------------
